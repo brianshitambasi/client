@@ -10,7 +10,6 @@ import {
   WANTS_EXPLANATION_OPTIONS,
   WEEKLY_TIME_OPTIONS,
   SOURCES,
-  BRAND,
   TEAM,
   CEO_NAME
 } from '../../utils/constants';
