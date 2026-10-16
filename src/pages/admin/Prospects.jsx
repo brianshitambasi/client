@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaSyncAlt, FaUserPlus, FaArrowRight } from 'react-icons/fa';
+import { FaSearch, FaSyncAlt, FaUserPlus, FaArrowRight, FaGraduationCap } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
 import {
@@ -152,6 +152,7 @@ export default function Prospects() {
                 <tr>
                   <th>Name</th>
                   <th>Contact</th>
+                  <th>Type</th>
                   <th>Source</th>
                   <th>Category</th>
                   <th>Status</th>
@@ -163,25 +164,35 @@ export default function Prospects() {
                 {items.map((p) => {
                   const sMeta = statusMeta(p.status);
                   const cMeta = categoryMeta(p.leadCategory);
+                  const isStudent = p.prospectType === 'student';
                   return (
                     <tr key={p._id}>
                       <td>
                         <Link to={`/admin/prospects/${p._id}`} className="fw-semibold">
                           {p.fullName}
                         </Link>
-                        <div className="small text-muted">{p.country || '—'}</div>
+                        <div className="small text-muted">
+                          {isStudent && p.studentInfo && p.studentInfo.school
+                            ? p.studentInfo.school
+                            : (p.country || '—')}
+                        </div>
                       </td>
                       <td className="small">
                         <div>{p.email}</div>
-                        <div className="text-muted">{p.whatsapp}</div>
+                        {p.whatsapp && <div className="text-muted">{p.whatsapp}</div>}
+                      </td>
+                      <td>
+                        {isStudent ? (
+                          <span className="badge bg-info text-dark d-inline-flex align-items-center gap-1">
+                            <FaGraduationCap /> Student
+                          </span>
+                        ) : (
+                          <span className="badge bg-light text-dark border">General</span>
+                        )}
                       </td>
                       <td className="small text-capitalize">{p.source}</td>
-                      <td>
-                        <span className={`badge bg-${cMeta.color}`}>{cMeta.label}</span>
-                      </td>
-                      <td>
-                        <span className={`badge bg-${sMeta.color}`}>{sMeta.label}</span>
-                      </td>
+                      <td><span className={`badge bg-${cMeta.color}`}>{cMeta.label}</span></td>
+                      <td><span className={`badge bg-${sMeta.color}`}>{sMeta.label}</span></td>
                       <td className="small text-muted">
                         {new Date(p.submittedAt).toLocaleDateString()}
                       </td>

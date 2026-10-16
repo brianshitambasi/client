@@ -14,6 +14,7 @@ import Business from './pages/public/Business';
 import FAQ from './pages/public/FAQ';
 import Contact from './pages/public/Contact';
 import Qualification from './pages/public/Qualification';
+import Students from './pages/public/Students';
 import ThankYou from './pages/public/ThankYou';
 import NotFound from './pages/public/NotFound';
 
@@ -44,6 +45,7 @@ export default function App() {
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/qualification" element={<Qualification />} />
+                  <Route path="/students" element={<Students />} />
                   <Route path="/thank-you" element={<ThankYou />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
