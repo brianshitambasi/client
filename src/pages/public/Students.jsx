@@ -4,7 +4,7 @@ import { FaGraduationCap, FaCheckCircle, FaSpinner, FaArrowRight } from 'react-i
 import Section from '../../components/ui/Section';
 import InputField from '../../components/forms/InputField';
 import api from '../../services/api';
-import { SOURCES, TEAM, CEO_NAME } from '../../utils/constants';
+import { TEAM, CEO_NAME } from '../../utils/constants';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
