@@ -25,6 +25,7 @@ export default function Prospects() {
   const [status, setStatus] = useState('');
   const [source, setSource] = useState('');
   const [category, setCategory] = useState('');
+  const [type, setType] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -35,6 +36,7 @@ export default function Prospects() {
       if (status) params.status = status;
       if (source) params.source = source;
       if (category) params.category = category;
+      if (type) params.type = type;
       const res = await api.get('/admin/prospects', { params });
       setItems(res.data.items || []);
       setTotal(res.data.total || 0);
@@ -46,7 +48,7 @@ export default function Prospects() {
     } finally {
       setLoading(false);
     }
-  }, [page, q, status, source, category]);
+  }, [page, q, status, source, category, type]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -62,6 +64,7 @@ export default function Prospects() {
     setStatus('');
     setSource('');
     setCategory('');
+    setType('');
     setPage(1);
   };
 
@@ -98,6 +101,14 @@ export default function Prospects() {
               />
               <button className="btn btn-primary" type="submit">Search</button>
             </div>
+          </div>
+          <div className="col-md-2">
+            <label className="form-label small fw-semibold">Type</label>
+            <select className="form-select" value={type} onChange={(e) => { setType(e.target.value); setPage(1); }}>
+              <option value="">All</option>
+              <option value="general">General</option>
+              <option value="student">Student</option>
+            </select>
           </div>
           <div className="col-md-2">
             <label className="form-label small fw-semibold">Status</label>

@@ -44,6 +44,9 @@ export default function Navbar() {
               <NavLink className="nav-link" to="/business" onClick={close}>Business</NavLink>
             </li>
             <li className="nav-item">
+              <NavLink className="nav-link" to="/students" onClick={close}>Students</NavLink>
+            </li>
+            <li className="nav-item">
               <NavLink className="nav-link" to="/faq" onClick={close}>FAQ</NavLink>
             </li>
             <li className="nav-item">

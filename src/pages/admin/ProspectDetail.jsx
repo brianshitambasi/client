@@ -8,7 +8,8 @@ import {
   FaSave,
   FaPlus,
   FaCheck,
-  FaCalendarPlus
+  FaCalendarPlus,
+  FaGraduationCap
 } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
@@ -64,7 +65,6 @@ export default function ProspectDetail() {
   useEffect(() => { load(); }, [load]);
 
   const saveBasics = async () => {
-    // Client-side phone validation before hitting the API
     const phone = (whatsapp || '').trim();
     const digits = phone.replace(/\D/g, '');
     if (phone && (/[a-zA-Z@]/.test(phone) || digits.length < 7 || digits.length > 15)) {
@@ -155,6 +155,9 @@ export default function ProspectDetail() {
   const { prospect, followUps, logs } = data;
   const sMeta = statusMeta(prospect.status);
   const cMeta = categoryMeta(prospect.leadCategory);
+  const isStudent = prospect.prospectType === 'student';
+  const si = prospect.studentInfo || {};
+  const days = Array.isArray(si.daysAvailable) ? si.daysAvailable : [];
 
   const waDigits = (whatsapp || prospect.whatsapp || '').replace(/[^\d]/g, '');
 
@@ -179,19 +182,51 @@ export default function ProspectDetail() {
               <span className={`badge bg-${sMeta.color}`}>{sMeta.label}</span>
             </div>
 
+            {isStudent && (
+              <div className="mb-3">
+                <span className="badge bg-info text-dark d-inline-flex align-items-center gap-1">
+                  <FaGraduationCap /> Student
+                </span>
+              </div>
+            )}
+
             <ul className="list-unstyled small mb-4">
               <li className="mb-2"><strong>Email:</strong> {prospect.email}</li>
-              <li className="mb-2"><strong>WhatsApp:</strong> {whatsapp || prospect.whatsapp}</li>
+              <li className="mb-2"><strong>WhatsApp:</strong> {whatsapp || prospect.whatsapp || '—'}</li>
               <li className="mb-2"><strong>Country:</strong> {prospect.country || '—'}</li>
               <li className="mb-2"><strong>Preferred contact:</strong> <span className="text-capitalize">{prospect.preferredContact}</span></li>
               <li className="mb-2"><strong>Source:</strong> <span className="text-capitalize">{prospect.source}</span></li>
               <li className="mb-2"><strong>Lead score:</strong> {prospect.leadScore}</li>
               <li className="mb-2"><strong>Category:</strong> <span className={`badge bg-${cMeta.color}`}>{cMeta.label}</span></li>
-              <li className="mb-2"><strong>Looking for:</strong> <span className="text-capitalize">{(prospect.lookingFor || '').replace('_', ' ')}</span></li>
-              <li className="mb-2"><strong>Previous experience:</strong> {prospect.previousExperience ? 'Yes' : 'No'}</li>
-              <li className="mb-2"><strong>Weekly time:</strong> {prospect.weeklyTime || '—'}</li>
-              <li className="mb-0"><strong>Wants explanation:</strong> <span className="text-capitalize">{prospect.wantsExplanation}</span></li>
+
+              {!isStudent && (
+                <>
+                  <li className="mb-2"><strong>Looking for:</strong> <span className="text-capitalize">{(prospect.lookingFor || '').replace('_', ' ')}</span></li>
+                  <li className="mb-2"><strong>Previous experience:</strong> {prospect.previousExperience ? 'Yes' : 'No'}</li>
+                  <li className="mb-2"><strong>Weekly time:</strong> {prospect.weeklyTime || '—'}</li>
+                  <li className="mb-0"><strong>Wants explanation:</strong> <span className="text-capitalize">{prospect.wantsExplanation}</span></li>
+                </>
+              )}
             </ul>
+
+            {isStudent && (
+              <div className="mb-3 p-3 rounded" style={{ background: '#e7f6ff', border: '1px solid #b8e0ff' }}>
+                <div className="small fw-semibold mb-2 d-flex align-items-center gap-2">
+                  <FaGraduationCap /> Student details
+                </div>
+                <ul className="list-unstyled small mb-0">
+                  <li className="mb-2"><strong>School:</strong> {si.school || '—'}</li>
+                  {si.course && <li className="mb-2"><strong>Course:</strong> {si.course}</li>}
+                  {si.yearOfStudy && <li className="mb-2"><strong>Year:</strong> {si.yearOfStudy}</li>}
+                  <li className="mb-0">
+                    <strong>Days available:</strong>{' '}
+                    {days.length === 0 ? '—' : days.map((d) => (
+                      <span key={d} className="badge bg-primary me-1">{d}</span>
+                    ))}
+                  </li>
+                </ul>
+              </div>
+            )}
 
             {prospect.questionsToClarify && (
               <div className="mb-3 p-3 rounded" style={{ background: '#f5f7fb' }}>
