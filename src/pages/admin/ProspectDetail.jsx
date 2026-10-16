@@ -31,6 +31,7 @@ export default function ProspectDetail() {
 
   const [status, setStatus] = useState('');
   const [notes, setNotes] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
   const [nextFollowUpDate, setNextFollowUpDate] = useState('');
 
   const [logForm, setLogForm] = useState({ channel: 'whatsapp', direction: 'outbound', summary: '', outcome: '' });
@@ -44,6 +45,7 @@ export default function ProspectDetail() {
       setData(res.data);
       setStatus(res.data.prospect.status);
       setNotes(res.data.prospect.notes || '');
+      setWhatsapp(res.data.prospect.whatsapp || '');
       setNextFollowUpDate(
         res.data.prospect.nextFollowUpDate
           ? new Date(res.data.prospect.nextFollowUpDate).toISOString().slice(0, 10)
@@ -62,11 +64,20 @@ export default function ProspectDetail() {
   useEffect(() => { load(); }, [load]);
 
   const saveBasics = async () => {
+    // Client-side phone validation before hitting the API
+    const phone = (whatsapp || '').trim();
+    const digits = phone.replace(/\D/g, '');
+    if (phone && (/[a-zA-Z@]/.test(phone) || digits.length < 7 || digits.length > 15)) {
+      alert('WhatsApp must be a valid phone number (7–15 digits, no letters or @).');
+      return;
+    }
+
     setSaving(true);
     try {
       await api.patch(`/admin/prospects/${id}`, {
         status,
         notes,
+        whatsapp: phone,
         nextFollowUpDate: nextFollowUpDate || null
       });
       await load();
@@ -145,6 +156,8 @@ export default function ProspectDetail() {
   const sMeta = statusMeta(prospect.status);
   const cMeta = categoryMeta(prospect.leadCategory);
 
+  const waDigits = (whatsapp || prospect.whatsapp || '').replace(/[^\d]/g, '');
+
   return (
     <AdminLayout>
       <div className="mb-3">
@@ -168,7 +181,7 @@ export default function ProspectDetail() {
 
             <ul className="list-unstyled small mb-4">
               <li className="mb-2"><strong>Email:</strong> {prospect.email}</li>
-              <li className="mb-2"><strong>WhatsApp:</strong> {prospect.whatsapp}</li>
+              <li className="mb-2"><strong>WhatsApp:</strong> {whatsapp || prospect.whatsapp}</li>
               <li className="mb-2"><strong>Country:</strong> {prospect.country || '—'}</li>
               <li className="mb-2"><strong>Preferred contact:</strong> <span className="text-capitalize">{prospect.preferredContact}</span></li>
               <li className="mb-2"><strong>Source:</strong> <span className="text-capitalize">{prospect.source}</span></li>
@@ -189,10 +202,11 @@ export default function ProspectDetail() {
 
             <div className="d-grid gap-2 mb-3">
               <a
-                href={`https://wa.me/${prospect.whatsapp.replace(/[^\d]/g, '')}`}
+                href={`https://wa.me/${waDigits}`}
                 target="_blank"
                 rel="noreferrer"
-                className="btn btn-success"
+                className={`btn btn-success ${waDigits.length < 7 ? 'disabled' : ''}`}
+                onClick={(e) => { if (waDigits.length < 7) e.preventDefault(); }}
               >
                 <FaWhatsapp className="me-2" /> WhatsApp them
               </a>
@@ -218,6 +232,16 @@ export default function ProspectDetail() {
                     <option key={s.value} value={s.value}>{s.label}</option>
                   ))}
                 </select>
+              </div>
+              <div className="col-md-6">
+                <label className="form-label small fw-semibold">WhatsApp number</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                  placeholder="2547XXXXXXXX"
+                />
               </div>
               <div className="col-md-6">
                 <label className="form-label small fw-semibold">Next follow-up date</label>

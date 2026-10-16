@@ -54,20 +54,39 @@ export default function Qualification() {
 
   const validateStep = () => {
     const er = {};
+
     if (step === 0) {
-      if (!form.fullName.trim() || form.fullName.trim().length < 2) er.fullName = 'Please enter your full name';
-      if (!form.whatsapp.trim() || form.whatsapp.trim().length < 6) er.whatsapp = 'Please enter a valid WhatsApp number';
-      if (!form.email.trim() || !/^\S+@\S+\.\S+$/.test(form.email)) er.email = 'Please enter a valid email';
+      if (!form.fullName.trim() || form.fullName.trim().length < 2) {
+        er.fullName = 'Please enter your full name';
+      }
+
+      if (!form.email.trim() || !/^\S+@\S+\.\S+$/.test(form.email)) {
+        er.email = 'Please enter a valid email';
+      }
+
+      const phone = (form.whatsapp || '').trim();
+      const digitsOnly = phone.replace(/\D/g, '');
+      if (!phone) {
+        er.whatsapp = 'Please enter your WhatsApp number';
+      } else if (/[a-zA-Z@]/.test(phone)) {
+        er.whatsapp = 'WhatsApp number cannot contain letters or @';
+      } else if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+        er.whatsapp = 'Please enter a valid phone number (7–15 digits)';
+      }
+
       if (!form.country.trim()) er.country = 'Please enter your country';
     }
+
     if (step === 1) {
       if (!form.lookingFor) er.lookingFor = 'Please pick what you are looking for';
       if (form.previousExperience === '') er.previousExperience = 'Please answer this';
       if (!form.weeklyTime) er.weeklyTime = 'Please choose an option';
     }
+
     if (step === 2) {
       if (!form.wantsExplanation) er.wantsExplanation = 'Please pick an option';
     }
+
     setErrors(er);
     return Object.keys(er).length === 0;
   };
@@ -77,6 +96,7 @@ export default function Qualification() {
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
   const back = () => {
     setStep((s) => Math.max(s - 1, 0));
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -88,6 +108,7 @@ export default function Qualification() {
     try {
       const payload = {
         ...form,
+        whatsapp: form.whatsapp.replace(/\s+/g, ''),
         previousExperience: form.previousExperience === 'yes'
       };
       const res = await api.post('/prospects', payload);
@@ -127,7 +148,6 @@ export default function Qualification() {
       <Section>
         <div className="row justify-content-center">
           <div className="col-lg-8">
-            {/* Progress */}
             <div className="mb-4">
               <div className="d-flex justify-content-between small text-muted mb-2">
                 <span>Step {step + 1} of {STEPS.length}</span>
@@ -143,9 +163,7 @@ export default function Qualification() {
             </div>
 
             <div className="yt-card" style={{ padding: '2rem' }}>
-              {serverError && (
-                <div className="alert alert-danger">{serverError}</div>
-              )}
+              {serverError && <div className="alert alert-danger">{serverError}</div>}
 
               {step === 0 && (
                 <>
@@ -263,10 +281,10 @@ export default function Qualification() {
                         <tr><th>WhatsApp</th><td>{form.whatsapp}</td></tr>
                         <tr><th>Email</th><td>{form.email}</td></tr>
                         <tr><th>Preferred contact</th><td className="text-capitalize">{form.preferredContact}</td></tr>
-                        <tr><th>Looking for</th><td>{LOOKING_FOR_OPTIONS.find(o => o.value === form.lookingFor)?.label || '—'}</td></tr>
+                        <tr><th>Looking for</th><td>{LOOKING_FOR_OPTIONS.find((o) => o.value === form.lookingFor)?.label || '—'}</td></tr>
                         <tr><th>Previous experience</th><td className="text-capitalize">{form.previousExperience || '—'}</td></tr>
                         <tr><th>Weekly time</th><td>{form.weeklyTime || '—'}</td></tr>
-                        <tr><th>Wants explanation</th><td>{WANTS_EXPLANATION_OPTIONS.find(o => o.value === form.wantsExplanation)?.label || '—'}</td></tr>
+                        <tr><th>Wants explanation</th><td>{WANTS_EXPLANATION_OPTIONS.find((o) => o.value === form.wantsExplanation)?.label || '—'}</td></tr>
                         <tr><th>Questions</th><td>{form.questionsToClarify || <span className="text-muted">—</span>}</td></tr>
                         <tr><th>Source</th><td className="text-capitalize">{form.source}</td></tr>
                       </tbody>
