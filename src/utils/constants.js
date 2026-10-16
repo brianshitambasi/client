@@ -1,4 +1,4 @@
-export const BRAND = process.env.REACT_APP_BRAND_NAME || 'YOBBYTECH';
+export const BRAND = process.env.REACT_APP_BRAND_NAME || 'BRIAN — CEO TNT';
 export const TEAM = process.env.REACT_APP_TEAM_NAME || 'TNT';
 export const CEO_NAME = 'Brian';
 export const CEO_WHATSAPP = process.env.REACT_APP_CEO_WHATSAPP || '254116378188';

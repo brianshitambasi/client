@@ -40,9 +40,7 @@ export default function Login() {
     <div className="yt-login-wrap">
       <div className="yt-login-card">
         <div className="text-center mb-4">
-          <h3 className="fw-bold mb-1">
-            {BRAND}<span style={{ color: '#0d6efd' }}>.</span>
-          </h3>
+          <h4 className="fw-bold mb-1">{BRAND}</h4>
           <p className="text-muted small mb-0">Team {TEAM} · CEO Admin</p>
         </div>
 

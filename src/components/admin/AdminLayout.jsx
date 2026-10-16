@@ -1,13 +1,8 @@
 import React from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import {
-  FaTachometerAlt,
-  FaUsers,
-  FaBoxOpen,
-  FaCalendarCheck,
-  FaChartBar,
-  FaSignOutAlt,
-  FaArrowLeft
+  FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar,
+  FaSignOutAlt, FaArrowLeft
 } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { BRAND, TEAM } from '../../utils/constants';
@@ -33,7 +28,7 @@ export default function AdminLayout({ children }) {
     <div className="yt-admin-shell">
       <aside className="yt-admin-side">
         <div className="yt-admin-brand">
-          {BRAND}<span style={{ color: '#0d6efd' }}>.</span>
+          {BRAND}
           <div className="small text-secondary mt-1" style={{ fontSize: '0.72rem', fontWeight: 500 }}>
             Team {TEAM} · Admin
           </div>

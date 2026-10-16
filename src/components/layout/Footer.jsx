@@ -9,9 +9,7 @@ export default function Footer() {
       <div className="container">
         <div className="row g-4">
           <div className="col-md-5">
-            <h5 className="text-white fw-bold mb-2">
-              {BRAND}<span style={{ color: '#0d6efd' }}>.</span>
-            </h5>
+            <h5 className="text-white fw-bold mb-2">{BRAND}</h5>
             <p className="mb-1">Team {TEAM} · Led by CEO TNT</p>
             <p className="small text-secondary mb-0">
               A transparent business opportunity built around people, products &amp; growth.
@@ -23,6 +21,7 @@ export default function Footer() {
               <li className="mb-1"><Link to="/about">About</Link></li>
               <li className="mb-1"><Link to="/how-it-works">How It Works</Link></li>
               <li className="mb-1"><Link to="/business">Business Model</Link></li>
+              <li className="mb-1"><Link to="/students">Students</Link></li>
               <li className="mb-1"><Link to="/faq">FAQ</Link></li>
             </ul>
           </div>
