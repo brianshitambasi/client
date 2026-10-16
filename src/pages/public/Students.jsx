@@ -49,17 +49,31 @@ export default function Students() {
 
   const validate = () => {
     const er = {};
-    if (!form.fullName.trim() || form.fullName.trim().length < 2) er.fullName = 'Please enter your full name';
-    if (!form.email.trim() || !/^\S+@\S+\.\S+$/.test(form.email)) er.email = 'Please enter a valid email';
-    if (!form.school.trim() || form.school.trim().length < 2) er.school = 'Please enter your school name';
-    if (form.daysAvailable.length === 0) er.daysAvailable = 'Pick at least one day';
 
-    if (form.whatsapp.trim()) {
-      const phone = form.whatsapp.trim();
-      const digits = phone.replace(/\D/g, '');
-      if (/[a-zA-Z@]/.test(phone) || digits.length < 7 || digits.length > 15) {
-        er.whatsapp = 'Please enter a valid phone number (or leave blank)';
-      }
+    if (!form.fullName.trim() || form.fullName.trim().length < 2) {
+      er.fullName = 'Please enter your full name';
+    }
+
+    if (!form.email.trim() || !/^\S+@\S+\.\S+$/.test(form.email)) {
+      er.email = 'Please enter a valid email';
+    }
+
+    if (!form.school.trim() || form.school.trim().length < 2) {
+      er.school = 'Please enter your school name';
+    }
+
+    const phone = (form.whatsapp || '').trim();
+    const digits = phone.replace(/\D/g, '');
+    if (!phone) {
+      er.whatsapp = 'WhatsApp number is required';
+    } else if (/[a-zA-Z@]/.test(phone)) {
+      er.whatsapp = 'WhatsApp number cannot contain letters or @';
+    } else if (digits.length < 7 || digits.length > 15) {
+      er.whatsapp = 'Please enter a valid phone number (7–15 digits)';
+    }
+
+    if (form.daysAvailable.length === 0) {
+      er.daysAvailable = 'Pick at least one day';
     }
 
     setErrors(er);
@@ -137,7 +151,7 @@ export default function Students() {
                   <InputField label="School" name="school" value={form.school} onChange={set} required error={errors.school} placeholder="University of Nairobi" />
                 </div>
                 <div className="col-md-6">
-                  <InputField label="WhatsApp number (optional)" name="whatsapp" value={form.whatsapp} onChange={set} error={errors.whatsapp} placeholder="2547XXXXXXXX" />
+                  <InputField label="WhatsApp number" name="whatsapp" value={form.whatsapp} onChange={set} required error={errors.whatsapp} placeholder="2547XXXXXXXX" />
                 </div>
 
                 <div className="col-md-6">
