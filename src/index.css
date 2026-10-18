@@ -243,3 +243,147 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.01em; }
   max-width: 400px;
   box-shadow: 0 30px 60px rgba(0,0,0,0.25);
 }
+
+/* ===== Modern Login ===== */
+.yt-login-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  background: #fff;
+}
+
+/* Left panel */
+.yt-login-left {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(700px 400px at 20% 10%, rgba(13,110,253,0.45), transparent 60%),
+    radial-gradient(500px 400px at 90% 90%, rgba(25,135,84,0.25), transparent 60%),
+    linear-gradient(135deg, #0b1b3b 0%, #122a63 55%, #0a1229 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 3rem;
+}
+.yt-login-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+.yt-login-left-inner {
+  position: relative;
+  max-width: 460px;
+  z-index: 1;
+}
+.yt-login-brand {
+  display: inline-block;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff !important;
+  letter-spacing: 0.3px;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+.yt-login-tagline {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 2.5rem;
+  color: #e7edff;
+}
+.yt-login-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem;
+  display: grid;
+  gap: 1.1rem;
+}
+.yt-login-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  font-size: 0.95rem;
+  color: #cdd9f5;
+}
+.yt-login-features li > svg {
+  color: #8ab4ff;
+  font-size: 1.15rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+.yt-login-features strong {
+  display: block;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+.yt-login-features span {
+  display: block;
+  font-size: 0.85rem;
+  color: #a9b8dc;
+}
+.yt-login-footer {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+}
+.yt-login-quote {
+  font-style: italic;
+  color: #e7edff;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+}
+.yt-login-quote-author {
+  font-size: 0.8rem;
+  color: #8ea3cc;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* Right panel */
+.yt-login-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fb;
+  padding: 3rem 2rem;
+}
+.yt-login-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow:
+    0 1px 2px rgba(11,27,59,0.04),
+    0 20px 40px -12px rgba(11,27,59,0.12);
+  border: 1px solid #e6e9f2;
+}
+.yt-login-card .form-control {
+  border-radius: 10px;
+  border-color: #e6e9f2;
+}
+.yt-login-card .form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 4px rgba(13,110,253,0.1);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .yt-login-shell { grid-template-columns: 1fr; }
+  .yt-login-left {
+    padding: 2.5rem 1.5rem;
+    min-height: 40vh;
+  }
+  .yt-login-tagline { font-size: 1.25rem; margin-bottom: 1.5rem; }
+  .yt-login-features { gap: 0.8rem; margin-bottom: 1.5rem; }
+  .yt-login-footer { display: none; }
+  .yt-login-right { padding: 2rem 1rem; }
+  .yt-login-card { padding: 1.75rem; }
+}
