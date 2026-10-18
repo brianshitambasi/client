@@ -9,7 +9,9 @@ import {
   FaPlus,
   FaCheck,
   FaCalendarPlus,
-  FaGraduationCap
+  FaGraduationCap,
+  FaCopy,
+  FaCheckCircle
 } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
@@ -29,6 +31,7 @@ export default function ProspectDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const [status, setStatus] = useState('');
   const [notes, setNotes] = useState('');
@@ -161,6 +164,23 @@ export default function ProspectDetail() {
 
   const waDigits = (whatsapp || prospect.whatsapp || '').replace(/[^\d]/g, '');
 
+  // Generate the intro message
+  const firstName = prospect.fullName.split(' ')[0];
+  let message = '';
+  
+  if (isStudent) {
+    message = `Hi ${firstName}! Brian here from CEO TNT. I saw you're studying ${si.course || 'at ' + (si.school || 'university')} and you mentioned you're available on ${days.join(', ')}. I'd love to share a flexible business opportunity that fits perfectly around your class schedule. Do you have a few minutes to chat this week?`;
+  } else {
+    const looking = (prospect.lookingFor || '').replace('_', ' ');
+    message = `Hi ${firstName}! Brian here from CEO TNT. Thanks for reaching out about the business opportunity. Since you mentioned you're looking for ${looking} and have ${prospect.weeklyTime || 'some time'} available, I'd love to share how our model works and answer any questions you have. Let me know when you're free to chat!`;
+  }
+
+  const copyMessage = () => {
+    navigator.clipboard.writeText(message);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <AdminLayout>
       <div className="mb-3">
@@ -234,6 +254,24 @@ export default function ProspectDetail() {
                 <div className="small text-muted">{prospect.questionsToClarify}</div>
               </div>
             )}
+
+            {/* Copy Message block */}
+            <div className="mb-3 p-3 rounded bg-light border">
+              <div className="small fw-semibold mb-2">Ready-to-send message</div>
+              <textarea 
+                className="form-control form-control-sm bg-white mb-2" 
+                rows={4} 
+                readOnly 
+                value={message}
+                style={{ resize: 'none', fontSize: '0.85rem' }}
+              />
+              <button 
+                className={`btn btn-sm w-100 ${copied ? 'btn-success' : 'btn-outline-secondary'}`} 
+                onClick={copyMessage}
+              >
+                {copied ? <><FaCheckCircle className="me-2" /> Copied!</> : <><FaCopy className="me-2" /> Copy Intro Message</>}
+              </button>
+            </div>
 
             <div className="d-grid gap-2 mb-3">
               <a
