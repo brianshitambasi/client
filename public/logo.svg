@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="TNT CEO logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#060f24"/>
+      <stop offset="55%" stop-color="#0e2250"/>
+      <stop offset="100%" stop-color="#0d5bd6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.2" cy="0.1" r="0.9">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#bcd3ff"/>
+    </linearGradient>
+    <linearGradient id="ribA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0d6efd"/>
+      <stop offset="100%" stop-color="#20c997"/>
+    </linearGradient>
+    <linearGradient id="ribB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#20c997"/>
+      <stop offset="100%" stop-color="#0d6efd"/>
+    </linearGradient>
+    <filter id="drop" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000814" flood-opacity="0.5"/>
+    </filter>
+    <clipPath id="clip"><rect width="512" height="512" rx="112"/></clipPath>
+    <g id="tnt">
+      <path d="M92 151h88v30h-29v120h-30V181H92z"/>
+      <path d="M196 301V151h30l60 86V151h30v150h-30l-60-86v86z"/>
+      <path d="M332 151h88v30h-29v120h-30V181h-29z"/>
+    </g>
+  </defs>
+
+  <g clip-path="url(#clip)">
+    <rect width="512" height="512" fill="url(#bg)"/>
+    <rect width="512" height="512" fill="url(#glow)"/>
+
+    <g filter="url(#drop)">
+      <g transform="rotate(-9 256 400)">
+        <rect x="-20" y="378" width="552" height="44" fill="url(#ribA)"/>
+        <rect x="-20" y="378" width="552" height="2" fill="#ffffff" fill-opacity="0.35"/>
+        <text x="120" y="408" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" letter-spacing="6" fill="#ffffff">CEO</text>
+      </g>
+      <g transform="rotate(9 256 400)">
+        <rect x="-20" y="378" width="552" height="44" fill="url(#ribB)"/>
+        <rect x="-20" y="378" width="552" height="2" fill="#ffffff" fill-opacity="0.35"/>
+        <text x="392" y="408" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" letter-spacing="6" fill="#ffffff">CEO</text>
+      </g>
+    </g>
+
+    <use href="#tnt" x="8" y="8" fill="#040a1c"/>
+    <use href="#tnt" x="7" y="7" fill="#06102a"/>
+    <use href="#tnt" x="6" y="6" fill="#091738"/>
+    <use href="#tnt" x="5" y="5" fill="#0c1e46"/>
+    <use href="#tnt" x="4" y="4" fill="#0f2656"/>
+    <use href="#tnt" x="3" y="3" fill="#133066"/>
+    <use href="#tnt" x="2" y="2" fill="#173a78"/>
+    <use href="#tnt" x="1" y="1" fill="#1c458a"/>
+
+    <use href="#tnt" fill="url(#face)"/>
+  </g>
+
+  <rect x="10" y="10" width="492" height="492" rx="102" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2"/>
+</svg>
