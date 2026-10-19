@@ -30,22 +30,28 @@ export default function Reviews({ productId }) {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const load = async () => {
+  // refetch trigger (bumps after submitting a review)
+  const [refresh, setRefresh] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     setError('');
-    try {
-      const res = await api.get(`/products/${productId}/reviews`);
-      setReviews(res.data.reviews || []);
-      setAverage(res.data.average || 0);
-      setCount(res.data.count || 0);
-    } catch (err) {
-      setError('Could not load reviews.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { load(); }, [productId]);
+    api.get(`/products/${productId}/reviews`)
+      .then((res) => {
+        if (cancelled) return;
+        setReviews(res.data.reviews || []);
+        setAverage(res.data.average || 0);
+        setCount(res.data.count || 0);
+      })
+      .catch(() => {
+        if (!cancelled) setError('Could not load reviews.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [productId, refresh]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -58,6 +64,7 @@ export default function Reviews({ productId }) {
       await api.post(`/products/${productId}/reviews`, form);
       setSuccess(true);
       setForm({ name: '', email: '', rating: 0, text: '' });
+      setRefresh((n) => n + 1);
     } catch (err) {
       alert(
         (err.response && err.response.data && (err.response.data.message || 'Submission failed')) ||

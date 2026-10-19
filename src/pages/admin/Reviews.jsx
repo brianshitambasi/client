@@ -28,27 +28,37 @@ export default function AdminReviews() {
   const [error, setError] = useState('');
   const [tab, setTab] = useState('');
 
-  const load = async () => {
+  // reload trigger
+  const [refresh, setRefresh] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     setError('');
-    try {
-      const params = {};
-      if (tab) params.status = tab;
-      const res = await api.get('/admin/reviews', { params });
-      setItems(res.data.items || []);
-    } catch (err) {
-      setError((err.response && err.response.data && err.response.data.message) || 'Failed to load reviews.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { load(); }, [tab]);
+    const params = {};
+    if (tab) params.status = tab;
+    api.get('/admin/reviews', { params })
+      .then((res) => {
+        if (!cancelled) setItems(res.data.items || []);
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setError(
+            (err.response && err.response.data && err.response.data.message) ||
+              'Failed to load reviews.'
+          );
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [tab, refresh]);
 
   const setStatus = async (id, status) => {
     try {
       await api.patch(`/admin/reviews/${id}`, { status });
-      await load();
+      setRefresh((n) => n + 1);
     } catch (err) {
       alert('Update failed.');
     }
@@ -58,11 +68,13 @@ export default function AdminReviews() {
     if (!window.confirm('Delete this review permanently?')) return;
     try {
       await api.delete(`/admin/reviews/${id}`);
-      await load();
+      setRefresh((n) => n + 1);
     } catch (err) {
       alert('Delete failed.');
     }
   };
+
+  const reload = () => setRefresh((n) => n + 1);
 
   return (
     <AdminLayout>
@@ -71,7 +83,7 @@ export default function AdminReviews() {
           <h3 className="fw-bold mb-0">Reviews</h3>
           <p className="text-muted small mb-0">Moderate product reviews before they go public</p>
         </div>
-        <button className="btn btn-outline-primary btn-sm" onClick={load} disabled={loading}>
+        <button className="btn btn-outline-primary btn-sm" onClick={reload} disabled={loading}>
           <FaSyncAlt className={loading ? 'fa-spin me-2' : 'me-2'} /> Refresh
         </button>
       </div>
