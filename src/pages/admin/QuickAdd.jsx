@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FaArrowLeft, FaSave, FaUserPlus } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
-import { SOURCES, LOOKING_FOR_OPTIONS, PREFERRED_CONTACT_OPTIONS } from '../../utils/constants';
+import { SOURCES, LOOKING_FOR_OPTIONS } from '../../utils/constants';
 
 export default function QuickAdd() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function QuickAdd() {
   return (
     <AdminLayout>
       <div className="mb-4"><Link to="/admin/prospects" className="text-decoration-none small"><FaArrowLeft /> Back to prospects</Link></div>
-      <div className="yt-card max-w-600 mx-auto" style={{ maxWidth: 600 }}>
+      <div className="yt-card mx-auto" style={{ maxWidth: 600 }}>
         <h4 className="fw-bold mb-4"><FaUserPlus className="text-primary me-2"/> Add Prospect Manually</h4>
         {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={submit} className="row g-3">

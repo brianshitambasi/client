@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
-  FaArrowLeft, FaWhatsapp, FaEnvelope, FaTrash, FaSave, FaPlus, FaCheck, 
-  FaCalendarPlus, FaGraduationCap, FaClock, FaUserPlus, FaPhone, FaStickyNote
+  FaArrowLeft, FaWhatsapp, FaEnvelope, FaTrash, FaSave, FaPlus,
+  FaCalendarPlus, FaGraduationCap, FaClock, FaUserPlus, FaPhone
 } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
@@ -23,7 +23,6 @@ export default function ProspectDetail() {
   const [nextFollowUpDate, setNextFollowUpDate] = useState('');
 
   const [logForm, setLogForm] = useState({ channel: 'whatsapp', direction: 'outbound', summary: '', outcome: '' });
-  const [followForm, setFollowForm] = useState({ dueDate: '', reason: '' });
 
   const load = useCallback(async () => {
     setLoading(true); setError('');
@@ -59,17 +58,6 @@ export default function ProspectDetail() {
     e.preventDefault();
     try { await api.post(`/admin/prospects/${id}/logs`, logForm); setLogForm({ ...logForm, summary: '', outcome: '' }); await load(); } 
     catch (err) { alert('Failed to add log.'); }
-  };
-
-  const addFollowUp = async (e) => {
-    e.preventDefault();
-    if (!followForm.dueDate) return;
-    try { await api.post(`/admin/prospects/${id}/followups`, followForm); setFollowForm({ dueDate: '', reason: '' }); await load(); } 
-    catch (err) { alert('Failed to add follow-up.'); }
-  };
-
-  const completeFollowUp = async (fid) => {
-    try { await api.patch(`/admin/followups/${fid}`, {}); await load(); } catch (err) { alert('Failed.'); }
   };
 
   const removeProspect = async () => {
@@ -112,7 +100,7 @@ export default function ProspectDetail() {
               <li className="mb-2"><strong>Email:</strong> {prospect.email}</li>
               <li className="mb-2"><strong>WhatsApp:</strong> {whatsapp || prospect.whatsapp || '—'}</li>
               <li className="mb-2"><strong>Category:</strong> <span className={`badge bg-${cMeta.color}`}>{cMeta.label}</span></li>
-              {!isStudent && <li className="mb-2"><strong>Looking for:</strong> <span className="text-capitalize">{prospect.lookingFor.replace('_', ' ')}</span></li>}
+              {!isStudent && <li className="mb-2"><strong>Looking for:</strong> <span className="text-capitalize">{(prospect.lookingFor || '').replace('_', ' ')}</span></li>}
             </ul>
 
             {isStudent && (

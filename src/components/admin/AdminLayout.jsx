@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar, FaSignOutAlt, FaArrowLeft, FaMoon, FaSun, FaUserPlus } from 'react-icons/fa';
+import { FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar, FaSignOutAlt, FaArrowLeft, FaMoon, FaSun } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { BRAND, TEAM } from '../../utils/constants';
 

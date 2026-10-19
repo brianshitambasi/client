@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaSearch, FaSyncAlt, FaUserPlus, FaArrowRight, FaGraduationCap, FaCheckSquare, FaRegSquare, FaTrash, FaUserCheck } from 'react-icons/fa';
+import { FaSearch, FaSyncAlt, FaUserPlus, FaCheckSquare, FaRegSquare, FaGraduationCap } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
-import { PROSPECT_STATUSES, SOURCES, LEAD_CATEGORIES, statusMeta, categoryMeta } from '../../utils/constants';
+import { PROSPECT_STATUSES, SOURCES, statusMeta, categoryMeta } from '../../utils/constants';
 
 const LIMIT = 15;
 
@@ -20,7 +20,6 @@ export default function Prospects() {
   const [searchInput, setSearchInput] = useState('');
   const [status, setStatus] = useState('');
   const [source, setSource] = useState('');
-  const [category, setCategory] = useState('');
   const [type, setType] = useState('');
 
   const load = useCallback(async () => {
@@ -31,7 +30,6 @@ export default function Prospects() {
       if (q) params.q = q;
       if (status) params.status = status;
       if (source) params.source = source;
-      if (category) params.category = category;
       if (type) params.type = type;
       const res = await api.get('/admin/prospects', { params });
       setItems(res.data.items || []);
@@ -42,12 +40,12 @@ export default function Prospects() {
     } finally {
       setLoading(false);
     }
-  }, [page, q, status, source, category, type]);
+  }, [page, q, status, source, type]);
 
   useEffect(() => { load(); }, [load]);
 
   const submitSearch = (e) => { e.preventDefault(); setPage(1); setQ(searchInput.trim()); };
-  const clearFilters = () => { setSearchInput(''); setQ(''); setStatus(''); setSource(''); setCategory(''); setType(''); setPage(1); };
+  const clearFilters = () => { setSearchInput(''); setQ(''); setStatus(''); setSource(''); setType(''); setPage(1); };
 
   const toggleSelect = (id) => {
     setSelected(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
@@ -90,7 +88,7 @@ export default function Prospects() {
       {error && <div className="alert alert-danger">{error}</div>}
 
       {selected.length > 0 && (
-        <div className="alert alert-primary d-flex align-items-center justify-content-between mb-3 animate__animated animate__fadeIn">
+        <div className="alert alert-primary d-flex align-items-center justify-content-between mb-3">
           <span><strong>{selected.length}</strong> prospects selected</span>
           <div className="d-flex gap-2">
             <select className="form-select form-select-sm w-auto" onChange={(e) => { bulkUpdateStatus(e.target.value); e.target.value=''; }}>
