@@ -37,7 +37,7 @@ const FEATURES = [
 
 // REPLACE THIS WITH YOUR YOUTUBE VIDEO ID
 // Example: If your link is https://www.youtube.com/watch?v=ABC123xyz, the ID is "ABC123xyz"
-const CEO_VIDEO_ID = 'dQw4w9WgXcQ'; 
+const CEO_VIDEO_ID = 'efq9VLyuNh4'; 
 const VIDEO_TITLE = `A quick message from CEO ${CEO_NAME}`;
 
 export default function Home() {
