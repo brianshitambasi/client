@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-  FaArrowLeft,
-  FaImage,
-  FaWhatsapp,
-  FaArrowRight,
-  FaCheckCircle
-} from 'react-icons/fa';
+import { FaArrowLeft, FaImage, FaWhatsapp, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
+import Reviews from '../../components/ui/Reviews';
 import api from '../../services/api';
 import { CEO_NAME, whatsappLink, BRAND, TEAM } from '../../utils/constants';
 
@@ -28,8 +23,7 @@ export default function ProductDetail() {
       .then((res) => setItem(res.data.item))
       .catch((err) => {
         setError(
-          (err.response && err.response.data && err.response.data.message) ||
-            'Product not found.'
+          (err.response && err.response.data && err.response.data.message) || 'Product not found.'
         );
       })
       .finally(() => setLoading(false));
@@ -44,9 +38,7 @@ export default function ProductDetail() {
   if (loading) {
     return (
       <Section>
-        <div className="text-center py-5">
-          <div className="spinner-border text-primary" />
-        </div>
+        <div className="text-center py-5"><div className="spinner-border text-primary" /></div>
       </Section>
     );
   }
@@ -73,17 +65,12 @@ export default function ProductDetail() {
     <>
       <header className="yt-hero" style={{ padding: '3rem 0 2.5rem' }}>
         <div className="container">
-          <Link
-            to="/products"
-            className="small text-white-50 d-inline-flex align-items-center gap-2 mb-3"
-          >
+          <Link to="/products" className="small text-white-50 d-inline-flex align-items-center gap-2 mb-3">
             <FaArrowLeft /> Back to products
           </Link>
           <span className="yt-eyebrow mb-3">{item.category || 'General'}</span>
           <h1 className="mb-2">{item.name}</h1>
-          {item.shortDesc && (
-            <p className="lead mb-0" style={{ maxWidth: 720 }}>{item.shortDesc}</p>
-          )}
+          {item.shortDesc && <p className="lead mb-0" style={{ maxWidth: 720 }}>{item.shortDesc}</p>}
         </div>
       </header>
 
@@ -107,9 +94,7 @@ export default function ProductDetail() {
                     display: 'block'
                   }}
                 />
-                <p className="text-muted small mt-2 mb-0">
-                  Click the image to view it full size.
-                </p>
+                <p className="text-muted small mt-2 mb-0">Click the image to view it full size.</p>
 
                 {images.length > 1 && (
                   <div className="d-flex gap-2 mt-3 flex-wrap">
@@ -196,6 +181,14 @@ export default function ProductDetail() {
         </div>
       </Section>
 
+      <Section light>
+        <div className="row justify-content-center">
+          <div className="col-lg-9">
+            <Reviews productId={item._id} />
+          </div>
+        </div>
+      </Section>
+
       {lightbox && active && (
         <div
           onClick={() => setLightbox(false)}
@@ -214,12 +207,7 @@ export default function ProductDetail() {
           <img
             src={active.url}
             alt={item.name}
-            style={{
-              maxWidth: '95%',
-              maxHeight: '95%',
-              objectFit: 'contain',
-              borderRadius: 12
-            }}
+            style={{ maxWidth: '95%', maxHeight: '95%', objectFit: 'contain', borderRadius: 12 }}
           />
           <button
             className="btn btn-light"

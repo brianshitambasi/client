@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar, FaSignOutAlt, FaArrowLeft, FaMoon, FaSun } from 'react-icons/fa';
+import { FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar, FaSignOutAlt, FaArrowLeft, FaMoon, FaSun, FaStar } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { BRAND, TEAM } from '../../utils/constants';
 
@@ -8,6 +8,7 @@ const NAV = [
   { to: '/admin/dashboard', icon: <FaTachometerAlt />, label: 'Dashboard' },
   { to: '/admin/prospects', icon: <FaUsers />, label: 'Prospects' },
   { to: '/admin/products', icon: <FaBoxOpen />, label: 'Products' },
+  { to: '/admin/reviews', icon: <FaStar />, label: 'Reviews' },
   { to: '/admin/followups', icon: <FaCalendarCheck />, label: 'Follow-ups' },
   { to: '/admin/analytics', icon: <FaChartBar />, label: 'Analytics' }
 ];
@@ -43,7 +44,7 @@ export default function AdminLayout({ children }) {
 
         <div className="mt-auto p-3">
           <button className="yt-admin-link mb-1 w-100 border-0 bg-transparent text-start" onClick={() => setDarkMode(!darkMode)}>
-            {darkMode ? <FaSun className="text-warning" /> : <FaMoon className="text-info" />} 
+            {darkMode ? <FaSun className="text-warning" /> : <FaMoon className="text-info" />}
             <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
           </button>
           <Link to="/" className="yt-admin-link mb-1"><FaArrowLeft /><span>Back to site</span></Link>
