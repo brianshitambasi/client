@@ -4,6 +4,7 @@ import { FaArrowLeft, FaImage, FaWhatsapp, FaArrowRight, FaCheckCircle } from 'r
 import Section from '../../components/ui/Section';
 import Reviews from '../../components/ui/Reviews';
 import ShareButton from '../../components/ui/ShareButton';
+import { SITE_URL } from '../../utils/site';
 import api from '../../services/api';
 import { CEO_NAME, whatsappLink, BRAND, TEAM } from '../../utils/constants';
 
@@ -170,7 +171,7 @@ export default function ProductDetail() {
 
             <div className="mt-3 pt-3 border-top">
               <ShareButton
-                url={`https://brian-ceotnt.vercel.app/products/${item._id}`}
+                url={`${SITE_URL}/products/${item._id}`}
                 text={`Check out "${item.name}" from ${BRAND} / ${TEAM}`}
                 label="Share this product"
                 variant="outline"

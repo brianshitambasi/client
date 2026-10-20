@@ -6,6 +6,7 @@ import {
 } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
 import ShareButton from '../../components/ui/ShareButton';
+import { SITE_URL } from '../../utils/site';
 import { BRAND, TEAM, CEO_NAME } from '../../utils/constants';
 
 const FEATURES = [
@@ -145,7 +146,7 @@ export default function Home() {
                 Request More Information
               </Link>
               <ShareButton
-                url="https://brian-ceotnt.vercel.app"
+                url={SITE_URL}
                 text={`${BRAND} / ${TEAM} — a transparent business opportunity built around people, products & growth`}
                 label="Share with a friend"
                 variant="outline"

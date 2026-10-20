@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaWhatsapp, FaCheckCircle, FaHome } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
 import ShareButton from '../../components/ui/ShareButton';
+import { SITE_URL } from '../../utils/site';
 import { CEO_NAME, whatsappLink, BRAND, TEAM } from '../../utils/constants';
 
 const CATEGORY_MSG = {
@@ -65,7 +66,7 @@ export default function ThankYou() {
                   Know someone who&apos;d appreciate a real opportunity?
                 </p>
                 <ShareButton
-                  url="https://brian-ceotnt.vercel.app"
+                  url={SITE_URL}
                   text={`I just checked out ${BRAND} / ${TEAM} — a transparent business opportunity built around people, products & growth. Worth a look.`}
                   label="Share with a friend"
                   variant="outline"
