@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaWhatsapp, FaCheckCircle, FaHome } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
+import ShareButton from '../../components/ui/ShareButton';
 import { CEO_NAME, whatsappLink, BRAND, TEAM } from '../../utils/constants';
 
 const CATEGORY_MSG = {
@@ -57,6 +58,18 @@ export default function ThankYou() {
                 <Link to="/" className="btn btn-outline-primary">
                   <FaHome className="me-2" /> Back to Home
                 </Link>
+              </div>
+              <div className="mt-3 pt-3 border-top">
+                <p className="text-muted small mb-2">
+                  Know someone who'd appreciate a real opportunity?
+                </p>
+                <ShareButton
+                  url="https://brian-ceotnt.vercel.app"
+                  text={`I just checked out ${BRAND} / ${TEAM} — a transparent business opportunity built around people, products & growth. Worth a look.`}
+                  label="Share with a friend"
+                  variant="outline"
+                  size="sm"
+                />
               </div>
             </div>
           </div>

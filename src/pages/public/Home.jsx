@@ -10,6 +10,7 @@ import {
   FaPlay
 } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
+import ShareButton from '../../components/ui/ShareButton';
 import { BRAND, TEAM, CEO_NAME } from '../../utils/constants';
 
 const FEATURES = [
@@ -191,9 +192,17 @@ export default function Home() {
               Take your time. Read through the pages, check the FAQ, and if you want a
               personal explanation, you can request one. There is no obligation.
             </p>
-            <Link to="/qualification" className="btn yt-btn-primary">
-              Request More Information
-            </Link>
+            <div className="d-flex flex-wrap justify-content-center gap-3">
+              <Link to="/qualification" className="btn yt-btn-primary">
+                Request More Information
+              </Link>
+              <ShareButton
+                url="https://brian-ceotnt.vercel.app"
+                text={`${BRAND} / ${TEAM} — a transparent business opportunity built around people, products & growth`}
+                label="Share with a friend"
+                variant="outline"
+              />
+            </div>
           </div>
         </div>
       </Section>

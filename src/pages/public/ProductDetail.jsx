@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaArrowLeft, FaImage, FaWhatsapp, FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
 import Reviews from '../../components/ui/Reviews';
+import ShareButton from '../../components/ui/ShareButton';
 import api from '../../services/api';
 import { CEO_NAME, whatsappLink, BRAND, TEAM } from '../../utils/constants';
 
@@ -164,6 +165,13 @@ export default function ProductDetail() {
               </a>
               <Link to="/qualification" className="btn btn-outline-primary">
                 Request a personal explanation <FaArrowRight className="ms-1" />
+              </Link>
+            </div>
+            <div className="mt-3 pt-3 border-top">
+              <ShareButton url={`https://brian-ceotnt.vercel.app/products/${item._id}`} text={`Check out "${item.name}" from ${BRAND} / ${TEAM}`} label="Share this product" variant="outline" size="sm" />
+            </div>
+            <div className="d-none">
+              <FaArrowRight className="ms-1" />
               </Link>
             </div>
 
