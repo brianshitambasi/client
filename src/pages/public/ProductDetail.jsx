@@ -167,12 +167,15 @@ export default function ProductDetail() {
                 Request a personal explanation <FaArrowRight className="ms-1" />
               </Link>
             </div>
+
             <div className="mt-3 pt-3 border-top">
-              <ShareButton url={`https://brian-ceotnt.vercel.app/products/${item._id}`} text={`Check out "${item.name}" from ${BRAND} / ${TEAM}`} label="Share this product" variant="outline" size="sm" />
-            </div>
-            <div className="d-none">
-              <FaArrowRight className="ms-1" />
-              </Link>
+              <ShareButton
+                url={`https://brian-ceotnt.vercel.app/products/${item._id}`}
+                text={`Check out "${item.name}" from ${BRAND} / ${TEAM}`}
+                label="Share this product"
+                variant="outline"
+                size="sm"
+              />
             </div>
 
             <div className="mt-4 p-3 rounded" style={{ background: '#f5f7fb' }}>

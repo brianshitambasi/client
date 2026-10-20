@@ -59,9 +59,10 @@ export default function ThankYou() {
                   <FaHome className="me-2" /> Back to Home
                 </Link>
               </div>
+
               <div className="mt-3 pt-3 border-top">
                 <p className="text-muted small mb-2">
-                  Know someone who'd appreciate a real opportunity?
+                  Know someone who&apos;d appreciate a real opportunity?
                 </p>
                 <ShareButton
                   url="https://brian-ceotnt.vercel.app"
