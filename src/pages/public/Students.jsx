@@ -63,12 +63,12 @@ export default function Students() {
       er.school = 'Please enter your school name';
     }
 
-    const phone = (form.whatsapp || '').trim();
-    const digits = phone.replace(/\D/g, '');
-    if (!phone) {
+    // STRICT WHATSAPP VALIDATION
+    const phoneStr = (form.whatsapp || '').replace(/\D/g, '');
+    if (!phoneStr) {
       er.whatsapp = 'WhatsApp number is required';
-    } else if (digits.length < 10 || digits.length > 15) {
-      er.whatsapp = 'Please enter a valid phone number';
+    } else if (phoneStr.length < 10) {
+      er.whatsapp = 'Please enter a complete phone number (e.g., 712345678)';
     }
 
     if (form.daysAvailable.length === 0) {
@@ -86,9 +86,13 @@ export default function Students() {
     setServerError('');
     setSubmitting(true);
     try {
+      // Clean the number: remove any leading 0 after country code (e.g., 2540712... becomes 254712...)
+      let cleanPhone = form.whatsapp.replace(/\D/g, '');
+      if (cleanPhone.startsWith('2540')) cleanPhone = '254' + cleanPhone.slice(4);
+      
       const res = await api.post('/students', {
         ...form,
-        whatsapp: form.whatsapp.replace(/\D/g, '')
+        whatsapp: cleanPhone
       });
       navigate('/thank-you', {
         state: {

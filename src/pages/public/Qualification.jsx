@@ -3,8 +3,8 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FaArrowRight, FaArrowLeft, FaCheckCircle, FaSpinner } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
 import InputField from '../../components/forms/InputField';
-import api from '../../services/api';
 import PhoneInputField from '../../components/forms/PhoneInputField';
+import api from '../../services/api';
 import {
   LOOKING_FOR_OPTIONS,
   PREFERRED_CONTACT_OPTIONS,
@@ -65,14 +65,12 @@ export default function Qualification() {
         er.email = 'Please enter a valid email';
       }
 
-      const phone = (form.whatsapp || '').trim();
-      const digitsOnly = phone.replace(/\D/g, '');
-      if (!phone) {
-        er.whatsapp = 'Please enter your WhatsApp number';
-      } else if (/[a-zA-Z@]/.test(phone)) {
-        er.whatsapp = 'WhatsApp number cannot contain letters or @';
-      } else if (digitsOnly.length < 7 || digitsOnly.length > 15) {
-        er.whatsapp = 'Please enter a valid phone number (7–15 digits)';
+      // STRICT WHATSAPP VALIDATION
+      const phoneStr = (form.whatsapp || '').replace(/\D/g, '');
+      if (!phoneStr) {
+        er.whatsapp = 'WhatsApp number is required';
+      } else if (phoneStr.length < 10) {
+        er.whatsapp = 'Please enter a complete phone number (e.g., 712345678)';
       }
 
       if (!form.country.trim()) er.country = 'Please enter your country';
@@ -107,9 +105,13 @@ export default function Qualification() {
     setServerError('');
     setSubmitting(true);
     try {
+      // Clean the number: remove any leading 0 after country code (e.g., 2540712... becomes 254712...)
+      let cleanPhone = form.whatsapp.replace(/\D/g, '');
+      if (cleanPhone.startsWith('2540')) cleanPhone = '254' + cleanPhone.slice(4);
+
       const payload = {
         ...form,
-        whatsapp: form.whatsapp.replace(/\s+/g, ''),
+        whatsapp: cleanPhone,
         previousExperience: form.previousExperience === 'yes'
       };
       const res = await api.post('/prospects', payload);
@@ -177,7 +179,13 @@ export default function Qualification() {
                       <InputField label="Country" name="country" value={form.country} onChange={set} required error={errors.country} placeholder="Kenya" />
                     </div>
                     <div className="col-md-6">
-                      <PhoneInputField label="WhatsApp Number" value={form.whatsapp} onChange={(val) => setForm({ ...form, whatsapp: val })} required error={errors.whatsapp} />
+                      <PhoneInputField
+                        label="WhatsApp Number"
+                        value={form.whatsapp}
+                        onChange={(val) => setForm({ ...form, whatsapp: val })}
+                        required
+                        error={errors.whatsapp}
+                      />
                     </div>
                     <div className="col-md-6">
                       <InputField label="Email" name="email" type="email" value={form.email} onChange={set} required error={errors.email} placeholder="you@example.com" />
