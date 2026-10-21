@@ -9,10 +9,11 @@ import {
   FaTiktok,
   FaFacebook,
   FaWhatsapp,
-  FaSyncAlt
+  FaSyncAlt, FaDownload
 } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
+import { downloadBackup } from '../../utils/backupDownload';
 
 const SOURCE_ICONS = {
   instagram: <FaInstagram />,
@@ -62,6 +63,12 @@ export default function Dashboard() {
         <button className="btn btn-outline-primary btn-sm" onClick={load} disabled={loading}>
           <FaSyncAlt className={loading ? 'fa-spin me-2' : 'me-2'} /> Refresh
         </button>
+          <button className="btn btn-outline-success btn-sm" onClick={downloadBackup}>
+            <FaDownload className="me-2" /> Backup
+          </button>
+          <button className="btn btn-outline-success btn-sm" onClick={downloadBackup}>
+            <FaDownload className="me-2" /> Backup
+          </button>
       </div>
 
       {error && <div className="alert alert-danger">{error}</div>}
