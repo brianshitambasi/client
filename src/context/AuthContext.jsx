@@ -23,11 +23,34 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
+  // Step 1: password
+  // Returns: { requires2FA, preAuthToken } | { requiresSetup, setupToken } | { user }
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
-    localStorage.setItem('tnt_token', res.data.token);
-    setUser(res.data.user);
-    return res.data.user;
+
+    // If already 2FA enabled → need code step
+    if (res.data.requires2FA) {
+      return { requires2FA: true, preAuthToken: res.data.preAuthToken };
+    }
+
+    // If 2FA not enabled yet → need setup step
+    if (res.data.requiresSetup) {
+      return { requiresSetup: true, setupToken: res.data.setupToken };
+    }
+
+    // Legacy path (shouldn't happen now, but safe)
+    if (res.data.token) {
+      localStorage.setItem('tnt_token', res.data.token);
+      setUser(res.data.user);
+      return { success: true, user: res.data.user };
+    }
+
+    throw new Error('Unexpected login response');
+  };
+
+  const completeLogin = (token, user) => {
+    localStorage.setItem('tnt_token', token);
+    setUser(user);
   };
 
   const logout = () => {
@@ -36,7 +59,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, completeLogin, logout }}>
       {children}
     </AuthContext.Provider>
   );
