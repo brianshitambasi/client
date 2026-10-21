@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FaArrowLeft, FaSave, FaUserPlus } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
+import PhoneInputField from '../../components/forms/PhoneInputField';
 import { SOURCES, LOOKING_FOR_OPTIONS } from '../../utils/constants';
 
 export default function QuickAdd() {
@@ -35,7 +36,7 @@ export default function QuickAdd() {
         <form onSubmit={submit} className="row g-3">
           <div className="col-md-6"><label className="form-label small fw-bold">Full Name *</label><input required className="form-control" value={form.fullName} onChange={e => setForm({...form, fullName: e.target.value})} /></div>
           <div className="col-md-6"><label className="form-label small fw-bold">Email *</label><input required type="email" className="form-control" value={form.email} onChange={e => setForm({...form, email: e.target.value})} /></div>
-          <div className="col-md-6"><label className="form-label small fw-bold">WhatsApp</label><input className="form-control" value={form.whatsapp} onChange={e => setForm({...form, whatsapp: e.target.value})} placeholder="254..." /></div>
+          <div className="col-md-6"><label className="form-label small fw-bold">WhatsApp</label><PhoneInputField value={form.whatsapp} onChange={(val) => setForm({...form, whatsapp: val})} /></div>
           <div className="col-md-6"><label className="form-label small fw-bold">Country</label><input className="form-control" value={form.country} onChange={e => setForm({...form, country: e.target.value})} /></div>
           <div className="col-md-6"><label className="form-label small fw-bold">Source</label><select className="form-select" value={form.source} onChange={e => setForm({...form, source: e.target.value})}>{SOURCES.map(s => <option key={s} value={s}>{s}</option>)}</select></div>
           <div className="col-md-6"><label className="form-label small fw-bold">Looking For</label><select className="form-select" value={form.lookingFor} onChange={e => setForm({...form, lookingFor: e.target.value})}>{LOOKING_FOR_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}</select></div>

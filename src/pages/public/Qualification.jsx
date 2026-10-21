@@ -4,6 +4,7 @@ import { FaArrowRight, FaArrowLeft, FaCheckCircle, FaSpinner } from 'react-icons
 import Section from '../../components/ui/Section';
 import InputField from '../../components/forms/InputField';
 import api from '../../services/api';
+import PhoneInputField from '../../components/forms/PhoneInputField';
 import {
   LOOKING_FOR_OPTIONS,
   PREFERRED_CONTACT_OPTIONS,
@@ -176,7 +177,7 @@ export default function Qualification() {
                       <InputField label="Country" name="country" value={form.country} onChange={set} required error={errors.country} placeholder="Kenya" />
                     </div>
                     <div className="col-md-6">
-                      <InputField label="WhatsApp number" name="whatsapp" value={form.whatsapp} onChange={set} required error={errors.whatsapp} placeholder="2547XXXXXXXX" />
+                      <PhoneInputField label="WhatsApp Number" value={form.whatsapp} onChange={(val) => setForm({ ...form, whatsapp: val })} required error={errors.whatsapp} />
                     </div>
                     <div className="col-md-6">
                       <InputField label="Email" name="email" type="email" value={form.email} onChange={set} required error={errors.email} placeholder="you@example.com" />
