@@ -22,11 +22,10 @@ import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import Prospects from './pages/admin/Prospects';
 import ProspectDetail from './pages/admin/ProspectDetail';
-import QuickAdd from './pages/admin/QuickAdd';
 import AdminProducts from './pages/admin/Products';
-import AdminReviews from './pages/admin/Reviews';
 import FollowUps from './pages/admin/FollowUps';
 import Analytics from './pages/admin/Analytics';
+import QuickAdd from './pages/admin/QuickAdd';
 
 export default function App() {
   return (
@@ -59,12 +58,11 @@ export default function App() {
           <Route path="/admin" element={<ProtectedRoute role="ceo"><Navigate to="/admin/dashboard" replace /></ProtectedRoute>} />
           <Route path="/admin/dashboard" element={<ProtectedRoute role="ceo"><Dashboard /></ProtectedRoute>} />
           <Route path="/admin/prospects" element={<ProtectedRoute role="ceo"><Prospects /></ProtectedRoute>} />
-          <Route path="/admin/prospects/new" element={<ProtectedRoute role="ceo"><QuickAdd /></ProtectedRoute>} />
           <Route path="/admin/prospects/:id" element={<ProtectedRoute role="ceo"><ProspectDetail /></ProtectedRoute>} />
           <Route path="/admin/products" element={<ProtectedRoute role="ceo"><AdminProducts /></ProtectedRoute>} />
-          <Route path="/admin/reviews" element={<ProtectedRoute role="ceo"><AdminReviews /></ProtectedRoute>} />
           <Route path="/admin/followups" element={<ProtectedRoute role="ceo"><FollowUps /></ProtectedRoute>} />
           <Route path="/admin/analytics" element={<ProtectedRoute role="ceo"><Analytics /></ProtectedRoute>} />
+         <Route path="/admin/prospects/new" element={<ProtectedRoute role="ceo"><QuickAdd /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
