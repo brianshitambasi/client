@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaGraduationCap, FaCheckCircle, FaSpinner, FaArrowRight } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
 import InputField from '../../components/forms/InputField';
+import PhoneInputField from '../../components/forms/PhoneInputField';
 import api from '../../services/api';
 import { TEAM, CEO_NAME } from '../../utils/constants';
 
@@ -66,10 +67,8 @@ export default function Students() {
     const digits = phone.replace(/\D/g, '');
     if (!phone) {
       er.whatsapp = 'WhatsApp number is required';
-    } else if (/[a-zA-Z@]/.test(phone)) {
-      er.whatsapp = 'WhatsApp number cannot contain letters or @';
-    } else if (digits.length < 7 || digits.length > 15) {
-      er.whatsapp = 'Please enter a valid phone number (7–15 digits)';
+    } else if (digits.length < 10 || digits.length > 15) {
+      er.whatsapp = 'Please enter a valid phone number';
     }
 
     if (form.daysAvailable.length === 0) {
@@ -89,7 +88,7 @@ export default function Students() {
     try {
       const res = await api.post('/students', {
         ...form,
-        whatsapp: form.whatsapp.trim().replace(/\s+/g, '')
+        whatsapp: form.whatsapp.replace(/\D/g, '')
       });
       navigate('/thank-you', {
         state: {
@@ -151,7 +150,13 @@ export default function Students() {
                   <InputField label="School" name="school" value={form.school} onChange={set} required error={errors.school} placeholder="University of Nairobi" />
                 </div>
                 <div className="col-md-6">
-                  <InputField label="WhatsApp number" name="whatsapp" value={form.whatsapp} onChange={set} required error={errors.whatsapp} placeholder="2547XXXXXXXX" />
+                  <PhoneInputField
+                    label="WhatsApp Number"
+                    value={form.whatsapp}
+                    onChange={(val) => setForm({ ...form, whatsapp: val })}
+                    required
+                    error={errors.whatsapp}
+                  />
                 </div>
 
                 <div className="col-md-6">

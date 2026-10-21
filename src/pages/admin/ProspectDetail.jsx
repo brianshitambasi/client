@@ -5,6 +5,7 @@ import {
   FaCalendarPlus, FaGraduationCap, FaClock, FaUserPlus, FaPhone
 } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
+import PhoneInputField from '../../components/forms/PhoneInputField';
 import api from '../../services/api';
 import { PROSPECT_STATUSES, LOG_CHANNELS, LOG_DIRECTIONS, statusMeta, categoryMeta } from '../../utils/constants';
 
@@ -41,22 +42,23 @@ export default function ProspectDetail() {
   useEffect(() => { load(); }, [load]);
 
   const saveBasics = async () => {
-    const phone = (whatsapp || '').trim();
-    const digits = phone.replace(/\D/g, '');
-    if (phone && (/[a-zA-Z@]/.test(phone) || digits.length < 7 || digits.length > 15)) {
-      alert('WhatsApp must be a valid phone number (7–15 digits, no letters or @).'); return;
+    // The PhoneInputField returns a string of digits already (e.g., '254742137305')
+    const phone = (whatsapp || '').replace(/\D/g, '');
+    if (phone && phone.length < 10) {
+      alert('Please enter a valid phone number.');
+      return;
     }
     setSaving(true);
     try {
       await api.patch(`/admin/prospects/${id}`, { status, notes, whatsapp: phone, nextFollowUpDate: nextFollowUpDate || null });
       await load();
-    } catch (err) { alert((err.response && err.response.data && err.response.data.message) || 'Save failed.'); } 
+    } catch (err) { alert((err.response && err.response.data && err.response.data.message) || 'Save failed.'); }
     finally { setSaving(false); }
   };
 
   const addLog = async (e) => {
     e.preventDefault();
-    try { await api.post(`/admin/prospects/${id}/logs`, logForm); setLogForm({ ...logForm, summary: '', outcome: '' }); await load(); } 
+    try { await api.post(`/admin/prospects/${id}/logs`, logForm); setLogForm({ ...logForm, summary: '', outcome: '' }); await load(); }
     catch (err) { alert('Failed to add log.'); }
   };
 
@@ -113,7 +115,7 @@ export default function ProspectDetail() {
             )}
 
             <div className="d-grid gap-2 mb-4">
-              <a href={`https://wa.me/${waDigits}`} target="_blank" rel="noreferrer" className={`btn btn-success ${waDigits.length < 7 ? 'disabled' : ''}`}><FaWhatsapp /> WhatsApp</a>
+              <a href={`https://wa.me/${waDigits}`} target="_blank" rel="noreferrer" className={`btn btn-success ${waDigits.length < 10 ? 'disabled' : ''}`}><FaWhatsapp /> WhatsApp</a>
               <a href={`mailto:${prospect.email}`} className="btn btn-outline-primary"><FaEnvelope /> Email</a>
             </div>
             <button className="btn btn-outline-danger w-100 btn-sm" onClick={removeProspect}><FaTrash /> Delete prospect</button>
@@ -132,8 +134,11 @@ export default function ProspectDetail() {
                   </select>
                 </div>
                 <div className="mb-3">
-                  <label className="form-label small fw-semibold">WhatsApp</label>
-                  <input type="text" className="form-control" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+                  <PhoneInputField
+                    label="WhatsApp Number"
+                    value={whatsapp}
+                    onChange={(val) => setWhatsapp(val)}
+                  />
                 </div>
                 <div className="mb-3">
                   <label className="form-label small fw-semibold">Next Follow-up</label>
