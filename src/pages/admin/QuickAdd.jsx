@@ -20,7 +20,7 @@ export default function QuickAdd() {
   const submit = async (e) => {
     e.preventDefault(); setLoading(true); setError('');
     try {
-      const res = await api.post('/prospects', form);
+      const res = await api.post('/admin/prospects', form);
       navigate(`/admin/prospects/${res.data.prospect.id}`);
     } catch (err) {
       setError((err.response && err.response.data && err.response.data.message) || 'Failed to add prospect.');
