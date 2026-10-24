@@ -44,8 +44,9 @@ export default function ThankYou() {
       <Section>
         <div className="row g-4 justify-content-center">
           
-          <div className="col-lg-7">
-            <div className="yt-card mb-4">
+          {/* LEFT COLUMN: Booking Calendar */}
+          <div className="col-lg-7 mb-4">
+            <div className="yt-card h-100 d-flex flex-column">
               <div className="d-flex align-items-center gap-3 mb-3">
                 <div className="yt-card-icon mb-0"><FaCalendarAlt /></div>
                 <div>
@@ -54,53 +55,57 @@ export default function ThankYou() {
                 </div>
               </div>
               
-              <div className="rounded overflow-hidden border" style={{ height: '650px', background: '#fff' }}>
+              <div className="rounded overflow-hidden border flex-grow-1" style={{ minHeight: '650px', background: '#fff' }}>
                 <iframe
                   src={BOOKING_LINK}
                   width="100%"
                   height="100%"
                   frameBorder="0"
                   title="Book a call"
+                  style={{ display: 'block' }}
                 ></iframe>
               </div>
             </div>
           </div>
 
+          {/* RIGHT COLUMN: What happens next & links */}
           <div className="col-lg-5">
-            <div className="yt-card mb-4">
-              <h5 className="fw-bold mb-3">What happens next</h5>
-              <ol className="text-muted mb-0 small">
-                <li className="mb-2">CEO {CEO_NAME} reviews your answers.</li>
-                <li className="mb-2">You book a time on the calendar.</li>
-                <li className="mb-2">We meet on Zoom (link sent via email).</li>
-                <li>You decide if you want to take the next step.</li>
-              </ol>
-            </div>
-
-            <div className="yt-card mb-4">
-              <h5 className="fw-bold mb-3">Prefer to chat on WhatsApp?</h5>
-              <p className="text-muted small mb-3">
-                If you'd rather just message first, CEO {CEO_NAME} is one tap away.
-              </p>
-              <a href={wa} target="_blank" rel="noreferrer" className="btn yt-btn-primary w-100">
-                <FaWhatsapp className="me-2" /> WhatsApp CEO {CEO_NAME}
-              </a>
-            </div>
-
-            <div className="yt-card text-center">
-              <p className="text-muted small mb-3">Know someone who'd appreciate this?</p>
-              <div className="d-flex justify-content-center">
-                <ShareButton
-                  url="https://brianceotnt.devs.li"
-                  text={`I just checked out ${BRAND} / ${TEAM} — a transparent business opportunity. Worth a look.`}
-                  label="Share with a friend"
-                  variant="outline"
-                  size="sm"
-                />
+            <div className="d-flex flex-column gap-3">
+              
+              <div className="yt-card">
+                <h5 className="fw-bold mb-3">What happens next</h5>
+                <ol className="text-muted mb-0 small ps-3">
+                  <li className="mb-2">CEO {CEO_NAME} reviews your answers.</li>
+                  <li className="mb-2">You book a time on the calendar.</li>
+                  <li className="mb-2">We meet on Zoom (link sent via email).</li>
+                  <li>You decide if you want to take the next step.</li>
+                </ol>
               </div>
-              <div className="mt-3">
+
+              <div className="yt-card">
+                <h5 className="fw-bold mb-3">Prefer to chat on WhatsApp?</h5>
+                <p className="text-muted small mb-3">
+                  If you'd rather just message first, CEO {CEO_NAME} is one tap away.
+                </p>
+                <a href={wa} target="_blank" rel="noreferrer" className="btn yt-btn-primary w-100">
+                  <FaWhatsapp className="me-2" /> WhatsApp CEO {CEO_NAME}
+                </a>
+              </div>
+
+              <div className="yt-card text-center">
+                <p className="text-muted small mb-3">Know someone who'd appreciate this?</p>
+                <div className="d-flex justify-content-center mb-3">
+                  <ShareButton
+                    url="https://brianceotnt.devs.li"
+                    text={`I just checked out ${BRAND} / ${TEAM} — a transparent business opportunity. Worth a look.`}
+                    label="Share with a friend"
+                    variant="outline"
+                    size="sm"
+                  />
+                </div>
                 <Link to="/" className="small text-muted text-decoration-none"><FaHome className="me-1" /> Back to Home</Link>
               </div>
+
             </div>
           </div>
 
