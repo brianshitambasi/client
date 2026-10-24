@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaWhatsapp, FaCheckCircle, FaHome } from 'react-icons/fa';
+import { FaWhatsapp, FaCheckCircle, FaHome, FaCalendarAlt } from 'react-icons/fa';
 import Section from '../../components/ui/Section';
 import ShareButton from '../../components/ui/ShareButton';
-import { SITE_URL } from '../../utils/site';
 import { CEO_NAME, whatsappLink, BRAND, TEAM } from '../../utils/constants';
 
 const CATEGORY_MSG = {
@@ -13,9 +12,20 @@ const CATEGORY_MSG = {
   NOT_READY: "That's completely fine. Here are some resources if you ever want to revisit this."
 };
 
+// ==============================================================
+// 👇 REPLACE THIS WITH YOUR REAL CALENDLY (OR CAL.COM) LINK 👇
+const BOOKING_LINK = 'YOUR_REAL_LINK_HERE'; 
+// ==============================================================
+
 export default function ThankYou() {
   const { state } = useLocation() || {};
   const category = (state && state.category) || null;
+
+  useEffect(() => {
+    // Fire tracking events when the Thank You page loads
+    if (window.fbq) window.fbq('track', 'Lead');
+    if (window.ttq) window.ttq.track('SubmitForm');
+  }, []);
 
   const waMessage = `Hi ${CEO_NAME}, I just went through the ${BRAND} / ${TEAM} opportunity page and I'd like to understand more.`;
   const wa = whatsappLink(waMessage);
@@ -36,57 +46,69 @@ export default function ThankYou() {
 
       <Section>
         <div className="row g-4 justify-content-center">
+          
+          {/* LEFT COLUMN: Booking Calendar */}
           <div className="col-lg-7">
-            <div className="yt-card">
-              <h4 className="fw-bold mb-3">What happens next</h4>
-              <ol className="text-muted mb-4">
+            <div className="yt-card mb-4">
+              <div className="d-flex align-items-center gap-3 mb-3">
+                <div className="yt-card-icon mb-0"><FaCalendarAlt /></div>
+                <div>
+                  <h4 className="fw-bold mb-1">Book your 1-on-1 call</h4>
+                  <p className="text-muted small mb-0">Skip the wait. Pick a time that works for you.</p>
+                </div>
+              </div>
+              
+              <div className="rounded overflow-hidden border" style={{ height: '600px', background: '#fff' }}>
+                <iframe
+                  src={BOOKING_LINK}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  title="Book a call"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: What happens next & links */}
+          <div className="col-lg-5">
+            <div className="yt-card mb-4">
+              <h5 className="fw-bold mb-3">What happens next</h5>
+              <ol className="text-muted mb-0 small">
                 <li className="mb-2">CEO {CEO_NAME} reviews your answers.</li>
-                <li className="mb-2">You receive a personal message on your preferred contact channel.</li>
-                <li className="mb-2">You get honest, clear answers — no pressure to decide.</li>
+                <li className="mb-2">You book a time on the calendar.</li>
+                <li className="mb-2">We meet on Zoom (link sent via email).</li>
                 <li>You decide if you want to take the next step.</li>
               </ol>
+            </div>
 
-              <p className="text-muted mb-4">
-                Want to skip the wait? Message CEO {CEO_NAME} directly on WhatsApp with the
-                button below. It opens a chat with a ready-made intro — you can edit it
-                before sending.
+            <div className="yt-card mb-4">
+              <h5 className="fw-bold mb-3">Prefer to chat on WhatsApp?</h5>
+              <p className="text-muted small mb-3">
+                If you'd rather just message first, CEO {CEO_NAME} is one tap away.
               </p>
+              <a href={wa} target="_blank" rel="noreferrer" className="btn yt-btn-primary w-100">
+                <FaWhatsapp className="me-2" /> WhatsApp CEO {CEO_NAME}
+              </a>
+            </div>
 
-              <div className="d-flex flex-wrap gap-2">
-                <a href={wa} target="_blank" rel="noreferrer" className="btn yt-btn-primary">
-                  <FaWhatsapp className="me-2" /> WhatsApp CEO {CEO_NAME}
-                </a>
-                <Link to="/" className="btn btn-outline-primary">
-                  <FaHome className="me-2" /> Back to Home
-                </Link>
-              </div>
-
-              <div className="mt-3 pt-3 border-top">
-                <p className="text-muted small mb-2">
-                  Know someone who&apos;d appreciate a real opportunity?
-                </p>
+            <div className="yt-card text-center">
+              <p className="text-muted small mb-3">Know someone who'd appreciate this?</p>
+              <div className="d-flex justify-content-center">
                 <ShareButton
-                  url={SITE_URL}
-                  text={`I just checked out ${BRAND} / ${TEAM} — a transparent business opportunity built around people, products & growth. Worth a look.`}
+                  url="https://brianceotnt.devs.li"
+                  text={`I just checked out ${BRAND} / ${TEAM} — a transparent business opportunity. Worth a look.`}
                   label="Share with a friend"
                   variant="outline"
                   size="sm"
                 />
               </div>
+              <div className="mt-3">
+                <Link to="/" className="small text-muted text-decoration-none"><FaHome className="me-1" /> Back to Home</Link>
+              </div>
             </div>
           </div>
 
-          <div className="col-lg-5">
-            <div className="yt-card h-100">
-              <h5 className="fw-bold mb-3">While you wait</h5>
-              <ul className="yt-list-check mb-0">
-                <li><Link to="/how-it-works">How the business works, step by step</Link></li>
-                <li><Link to="/business">The business model in plain language</Link></li>
-                <li><Link to="/products">See the current product line</Link></li>
-                <li><Link to="/faq">Common questions answered honestly</Link></li>
-              </ul>
-            </div>
-          </div>
         </div>
       </Section>
     </>
