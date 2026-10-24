@@ -12,17 +12,14 @@ const CATEGORY_MSG = {
   NOT_READY: "That's completely fine. Here are some resources if you ever want to revisit this."
 };
 
-// ==============================================================
-// 👇 REPLACE THIS WITH YOUR REAL CALENDLY (OR CAL.COM) LINK 👇
-const BOOKING_LINK = 'YOUR_REAL_LINK_HERE'; 
-// ==============================================================
+// ✅ YOUR REAL CALENDLY LINK
+const BOOKING_LINK = 'https://calendly.com/brianshitambasi270/30min'; 
 
 export default function ThankYou() {
   const { state } = useLocation() || {};
   const category = (state && state.category) || null;
 
   useEffect(() => {
-    // Fire tracking events when the Thank You page loads
     if (window.fbq) window.fbq('track', 'Lead');
     if (window.ttq) window.ttq.track('SubmitForm');
   }, []);
@@ -47,7 +44,6 @@ export default function ThankYou() {
       <Section>
         <div className="row g-4 justify-content-center">
           
-          {/* LEFT COLUMN: Booking Calendar */}
           <div className="col-lg-7">
             <div className="yt-card mb-4">
               <div className="d-flex align-items-center gap-3 mb-3">
@@ -58,7 +54,7 @@ export default function ThankYou() {
                 </div>
               </div>
               
-              <div className="rounded overflow-hidden border" style={{ height: '600px', background: '#fff' }}>
+              <div className="rounded overflow-hidden border" style={{ height: '650px', background: '#fff' }}>
                 <iframe
                   src={BOOKING_LINK}
                   width="100%"
@@ -70,7 +66,6 @@ export default function ThankYou() {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: What happens next & links */}
           <div className="col-lg-5">
             <div className="yt-card mb-4">
               <h5 className="fw-bold mb-3">What happens next</h5>
