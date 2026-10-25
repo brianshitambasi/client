@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { 
   FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar, 
-  FaSignOutAlt, FaArrowLeft, FaMoon, FaSun, FaStar, FaLink 
+  FaSignOutAlt, FaArrowLeft, FaMoon, FaSun, FaStar, FaLink, FaEnvelope 
 } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { BRAND, TEAM } from '../../utils/constants';
