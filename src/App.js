@@ -16,6 +16,7 @@ import Contact from './pages/public/Contact';
 import Qualification from './pages/public/Qualification';
 import Students from './pages/public/Students';
 import ThankYou from './pages/public/ThankYou';
+import FreeGuide from './pages/public/FreeGuide';
 import NotFound from './pages/public/NotFound';
 
 import Login from './pages/admin/Login';
@@ -26,6 +27,7 @@ import QuickAdd from './pages/admin/QuickAdd';
 import AdminProducts from './pages/admin/Products';
 import AdminReviews from './pages/admin/Reviews';
 import AdminReferrals from './pages/admin/Referrals';
+import AdminLeads from './pages/admin/Leads';
 import FollowUps from './pages/admin/FollowUps';
 import Analytics from './pages/admin/Analytics';
 
@@ -50,6 +52,7 @@ export default function App() {
                   <Route path="/qualification" element={<Qualification />} />
                   <Route path="/students" element={<Students />} />
                   <Route path="/thank-you" element={<ThankYou />} />
+                  <Route path="/free-guide" element={<FreeGuide />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </PublicLayout>
@@ -65,6 +68,7 @@ export default function App() {
           <Route path="/admin/products" element={<ProtectedRoute role="ceo"><AdminProducts /></ProtectedRoute>} />
           <Route path="/admin/reviews" element={<ProtectedRoute role="ceo"><AdminReviews /></ProtectedRoute>} />
           <Route path="/admin/referrals" element={<ProtectedRoute role="ceo"><AdminReferrals /></ProtectedRoute>} />
+          <Route path="/admin/leads" element={<ProtectedRoute role="ceo"><AdminLeads /></ProtectedRoute>} />
           <Route path="/admin/followups" element={<ProtectedRoute role="ceo"><FollowUps /></ProtectedRoute>} />
           <Route path="/admin/analytics" element={<ProtectedRoute role="ceo"><Analytics /></ProtectedRoute>} />
         </Routes>
