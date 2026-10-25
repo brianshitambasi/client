@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar, FaSignOutAlt, FaArrowLeft, FaMoon, FaSun, FaStar } from 'react-icons/fa';
+import { 
+  FaTachometerAlt, FaUsers, FaBoxOpen, FaCalendarCheck, FaChartBar, 
+  FaSignOutAlt, FaArrowLeft, FaMoon, FaSun, FaStar, FaLink 
+} from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { BRAND, TEAM } from '../../utils/constants';
 
@@ -9,6 +12,7 @@ const NAV = [
   { to: '/admin/prospects', icon: <FaUsers />, label: 'Prospects' },
   { to: '/admin/products', icon: <FaBoxOpen />, label: 'Products' },
   { to: '/admin/reviews', icon: <FaStar />, label: 'Reviews' },
+  { to: '/admin/referrals', icon: <FaLink />, label: 'Referrals' },
   { to: '/admin/followups', icon: <FaCalendarCheck />, label: 'Follow-ups' },
   { to: '/admin/analytics', icon: <FaChartBar />, label: 'Analytics' }
 ];

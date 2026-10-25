@@ -25,6 +25,7 @@ import ProspectDetail from './pages/admin/ProspectDetail';
 import QuickAdd from './pages/admin/QuickAdd';
 import AdminProducts from './pages/admin/Products';
 import AdminReviews from './pages/admin/Reviews';
+import AdminReferrals from './pages/admin/Referrals';
 import FollowUps from './pages/admin/FollowUps';
 import Analytics from './pages/admin/Analytics';
 
@@ -63,6 +64,7 @@ export default function App() {
           <Route path="/admin/prospects/:id" element={<ProtectedRoute role="ceo"><ProspectDetail /></ProtectedRoute>} />
           <Route path="/admin/products" element={<ProtectedRoute role="ceo"><AdminProducts /></ProtectedRoute>} />
           <Route path="/admin/reviews" element={<ProtectedRoute role="ceo"><AdminReviews /></ProtectedRoute>} />
+          <Route path="/admin/referrals" element={<ProtectedRoute role="ceo"><AdminReferrals /></ProtectedRoute>} />
           <Route path="/admin/followups" element={<ProtectedRoute role="ceo"><FollowUps /></ProtectedRoute>} />
           <Route path="/admin/analytics" element={<ProtectedRoute role="ceo"><Analytics /></ProtectedRoute>} />
         </Routes>
