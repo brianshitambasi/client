@@ -361,6 +361,7 @@ export default function ProspectDetail() {
               <InfoRow label="WhatsApp">{whatsapp || prospect.whatsapp || '—'}</InfoRow>
               <InfoRow label="Category"><span className={`badge bg-${cMeta.color}`}>{cMeta.label}</span></InfoRow>
               <InfoRow label="Source"><span className="text-capitalize">{humanize(prospect.source)}</span></InfoRow>
+              {prospect.referralCode && <InfoRow label="Referral Code"><span className="badge bg-info text-dark text-uppercase">{prospect.referralCode}</span></InfoRow>}
               {!isStudent && (
                 <InfoRow label="Looking for">
                   <span className="text-capitalize">{humanize(prospect.lookingFor) || '—'}</span>
