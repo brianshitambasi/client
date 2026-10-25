@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FaSyncAlt, FaChartPie, FaChartBar, FaChartLine } from 'react-icons/fa';
+import React, { useEffect, useState, useCallback } from 'react';
+import { FaSyncAlt, FaChartPie, FaChartBar, FaChartLine, FaUsers } from 'react-icons/fa';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -47,15 +47,20 @@ function StatCard({ label, value, color }) {
 
 export default function Analytics() {
   const [data, setData] = useState(null);
+  const [referrals, setReferrals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const res = await api.get('/admin/analytics/overview');
-      setData(res.data);
+      const [overviewRes, referralsRes] = await Promise.all([
+        api.get('/admin/analytics/overview'),
+        api.get('/admin/analytics/referrals')
+      ]);
+      setData(overviewRes.data);
+      setReferrals(referralsRes.data.items || []);
     } catch (err) {
       setError(
         (err.response && err.response.data && err.response.data.message) ||
@@ -64,9 +69,9 @@ export default function Analytics() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [load]);
 
   if (loading && !data) {
     return (
@@ -180,11 +185,7 @@ export default function Analytics() {
         <div className="col-6 col-lg-3"><StatCard label="High interest" value={highInterest} color="#dc3545" /></div>
         <div className="col-6 col-lg-3"><StatCard label="New" value={newCount} color="#0d6efd" /></div>
         <div className="col-6 col-lg-3">
-          <StatCard
-            label="Students / General"
-            value={`${studentCount} / ${generalCount}`}
-            color="#198754"
-          />
+          <StatCard label="Students / General" value={`${studentCount} / ${generalCount}`} color="#198754" />
         </div>
       </div>
 
@@ -239,6 +240,39 @@ export default function Analytics() {
               <Bar data={categoryChart} options={barOpts} />
             </div>
           </div>
+
+          {/* NEW: Referral Leaderboard */}
+          <div className="col-12 mt-4">
+            <div className="yt-card">
+              <div className="d-flex align-items-center gap-2 mb-3">
+                <FaUsers className="text-primary" />
+                <h5 className="fw-bold mb-0">Referral Leaderboard</h5>
+              </div>
+              {referrals.length === 0 ? (
+                <p className="text-muted small mb-0">No referrals yet. Share links with your team to start tracking.</p>
+              ) : (
+                <div className="table-responsive">
+                  <table className="table table-sm align-middle mb-0">
+                    <thead>
+                      <tr className="text-muted small">
+                        <th>Ref Code</th>
+                        <th>Prospects Referred</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {referrals.map(r => (
+                        <tr key={r.code}>
+                          <td><span className="badge bg-secondary text-uppercase">{r.code}</span></td>
+                          <td className="fw-bold">{r.count}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+
         </div>
       )}
     </AdminLayout>
