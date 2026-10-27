@@ -14,6 +14,7 @@ const NAV = [
   { to: '/admin/reviews', icon: <FaStar />, label: 'Reviews' },
   { to: '/admin/referrals', icon: <FaLink />, label: 'Referrals' },
   { to: '/admin/leads', icon: <FaEnvelope />, label: 'Email Leads' },
+  { to: '/admin/blog', icon: <FaBook />, label: 'Blog' },
   { to: '/admin/followups', icon: <FaCalendarCheck />, label: 'Follow-ups' },
   { to: '/admin/analytics', icon: <FaChartBar />, label: 'Analytics' }
 ];
