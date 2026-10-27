@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  FaUsers,
-  FaUserPlus,
-  FaFire,
-  FaCalendarCheck,
-  FaInstagram,
-  FaTiktok,
-  FaFacebook,
-  FaWhatsapp,
+  FaUsers, FaUserPlus, FaFire, FaCalendarCheck, 
+  FaInstagram, FaTiktok, FaFacebook, FaWhatsapp, 
   FaSyncAlt, FaDownload
 } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
@@ -60,15 +54,14 @@ export default function Dashboard() {
           <h3 className="fw-bold mb-0">Dashboard</h3>
           <p className="text-muted small mb-0">Overview of your prospect pipeline</p>
         </div>
-        <button className="btn btn-outline-primary btn-sm" onClick={load} disabled={loading}>
-          <FaSyncAlt className={loading ? 'fa-spin me-2' : 'me-2'} /> Refresh
-        </button>
-          <button className="btn btn-outline-success btn-sm" onClick={downloadBackup}>
-            <FaDownload className="me-2" /> Backup
+        <div className="d-flex gap-2">
+          <button className="btn btn-outline-primary btn-sm" onClick={load} disabled={loading}>
+            <FaSyncAlt className={loading ? 'fa-spin me-2' : 'me-2'} /> Refresh
           </button>
           <button className="btn btn-outline-success btn-sm" onClick={downloadBackup}>
             <FaDownload className="me-2" /> Backup
           </button>
+        </div>
       </div>
 
       {error && <div className="alert alert-danger">{error}</div>}
@@ -124,7 +117,7 @@ export default function Dashboard() {
           <div className="yt-card h-100">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h5 className="fw-bold mb-0">Follow-ups due today</h5>
-              <Link to="/admin/followups" className="small">View all</Link>
+              <Link to="/admin/followups" className="small text-decoration-none">View all</Link>
             </div>
             {dueToday.length === 0 ? (
               <p className="text-muted small mb-0">Nothing due today.</p>
@@ -142,7 +135,7 @@ export default function Dashboard() {
                     {dueToday.map((f) => (
                       <tr key={f._id}>
                         <td>
-                          <Link to={`/admin/prospects/${f.prospect?._id}`}>
+                          <Link to={`/admin/prospects/${f.prospect?._id}`} className="text-decoration-none">
                             {f.prospect?.fullName || 'Unknown'}
                           </Link>
                         </td>
@@ -163,7 +156,7 @@ export default function Dashboard() {
           <div className="yt-card">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h5 className="fw-bold mb-0">Recent submissions</h5>
-              <Link to="/admin/prospects" className="small">View all</Link>
+              <Link to="/admin/prospects" className="small text-decoration-none">View all</Link>
             </div>
             {recent.length === 0 ? (
               <p className="text-muted small mb-0">No prospects yet.</p>
@@ -184,7 +177,7 @@ export default function Dashboard() {
                     {recent.map((p) => (
                       <tr key={p._id}>
                         <td>
-                          <Link to={`/admin/prospects/${p._id}`} className="fw-semibold">
+                          <Link to={`/admin/prospects/${p._id}`} className="fw-semibold text-decoration-none">
                             {p.fullName}
                           </Link>
                         </td>
