@@ -9,20 +9,25 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // Don't intercept non-GET requests, images, or bot requests
+  if (
+    event.request.method !== 'GET' || 
+    event.request.url.includes('.png') || 
+    event.request.url.includes('.jpg') ||
+    event.request.url.includes('?fbclid')
+  ) {
+    return;
+  }
+
   event.respondWith(
     fetch(event.request).catch(() => {
       return caches.match(event.request).then((response) => {
         if (response) {
           return response;
         }
-        // If no cached response, return a safe error response instead of crashing
         return new Response(
-          JSON.stringify({ error: 'You are offline and this content is not cached.' }),
-          {
-            status: 503,
-            statusText: 'Service Unavailable',
-            headers: { 'Content-Type': 'application/json' }
-          }
+          JSON.stringify({ error: 'You are offline.' }),
+          { status: 503, statusText: 'Service Unavailable', headers: { 'Content-Type': 'application/json' } }
         );
       });
     })
