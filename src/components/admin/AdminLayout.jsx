@@ -36,7 +36,7 @@ export default function AdminLayout({ children }) {
     <div className="yt-admin-shell">
       <aside className="yt-admin-side">
         <div className="yt-admin-brand d-flex align-items-center gap-2">
-          <img src="/logo.svg" alt="CEO TNT" width="32" height="32" style={{ borderRadius: 8 }} />
+          <img src="/brian.png" alt="CEO TNT" width="32" height="32" style={{ borderRadius: 8 }} />
           <div><div style={{ lineHeight: 1.1 }}>{BRAND}</div><div className="small text-secondary" style={{ fontSize: '0.72rem' }}>Team {TEAM} · Admin</div></div>
         </div>
 
