@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaLink, FaCopy, FaCheckCircle, FaUsers } from 'react-icons/fa';
 import AdminLayout from '../../components/admin/AdminLayout';
 
-const BASE_URL = 'https://brianceotnt.web.app';
+const BASE_URL = 'https://brianceotnt-official.web.app';
 
 export default function Referrals() {
   const [name, setName] = useState('');

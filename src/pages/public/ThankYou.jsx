@@ -96,7 +96,7 @@ export default function ThankYou() {
                 <p className="text-muted small mb-3">Know someone who'd appreciate this?</p>
                 <div className="d-flex justify-content-center mb-3">
                   <ShareButton
-                    url="https://brianceotnt.web.app"
+                    url="https://brianceotnt-official.web.app"
                     text={`I just checked out ${BRAND} / ${TEAM} — a transparent business opportunity. Worth a look.`}
                     label="Share with a friend"
                     variant="outline"
